@@ -30,5 +30,7 @@ cam = Processor(
 
 print("yea")
 while True:
-    markers = cam.see_ids()
+    markers = cam.see()
+    for marker in markers:
+        print(marker.id)
     print(markers)
