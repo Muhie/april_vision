@@ -174,7 +174,7 @@ class Processor:
                     thickness=2,
                 )
 
-        return frame
+        return frame, text_origin
 
     def _save(self, frame: Frame, name: Union[str, Path], colour: bool = True) -> None:
         """Save a frame to a file, selectable between colour and grayscale."""
@@ -232,6 +232,29 @@ class Processor:
                 detections,
             )
         self._save(frames, name)
+
+    def return_frames(
+        self,
+        name: Union[str, Path] = None,
+        *,
+        frame: Optional[NDArray] = None,
+        detections: Optional[List[Marker]] = None,
+        annotated: bool = True,
+    ) -> None:
+        """Save an annotated image to a file."""
+        if frame is None:
+            frames = self._capture()
+        else:
+            frames = Frame.from_colour_frame(frame, colourspace=self._frame_source.COLOURSPACE)
+        if annotated:
+            if detections is None:
+                detections = self._detect(frames)
+            frames = self._annotate(
+                frames,
+                detections,
+            )
+        return(frames, detections)
+        
 
     def close(self) -> None:
         """Close the underlying capture device."""
