@@ -9,8 +9,8 @@
   <cols>3</cols>
   <dt>d</dt>
   <data>
-    1.0059832255301474e+03 0. 6.3600363812582748e+02 0.
-    1.0059832255301474e+03 3.9032987567991756e+02 0. 0. 1.</data></cameraMatrix>
+    1.4695190683530918e+03 0. 9.4800685320085850e+02 0.
+    1.4807673087614864e+03 5.7366018981673680e+02 0. 0. 1.</data></cameraMatrix>
 <cameraMatrix_std_dev type_id="opencv-matrix">
   <rows>4</rows>
   <cols>1</cols>
@@ -23,7 +23,7 @@
   <cols>5</cols>
   <dt>d</dt>
   <data>
-    6.8703433405016029e-02 0. 0. 0. -2.4193185280867940e-01</data></dist_coeffs>
+    8.3571272242959280e-02 -7.8072016961824930e-01 2.3902569510033194e-04 -5.0078178473921840e-03 1.0622615239569670e+00</data></dist_coeffs>
 <dist_coeffs_std_dev type_id="opencv-matrix">
   <rows>5</rows>
   <cols>1</cols>
@@ -31,5 +31,5 @@
   <data>
     1.2370831283282813e-02 0. 0. 0. 7.8882690649474521e-02</data></dist_coeffs_std_dev>
 <avg_reprojection_error>4.8677611488489964e-01</avg_reprojection_error>
-<vidpid>"FaceTime HD Camera"</vidpid>
+<vidpid>"1bcf:2281"</vidpid>
 </opencv_storage>

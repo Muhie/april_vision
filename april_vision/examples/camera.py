@@ -12,7 +12,6 @@ from april_vision import (
     Marker,
     Processor,
     USBCamera,
-    __version__,
     calibrations,
     find_cameras,
     generate_marker_size_mapping,

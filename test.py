@@ -1,7 +1,16 @@
 from april_vision import Processor, USBCamera, calibrations, find_cameras
+from april_vision.examples.camera import setup_cameras
 
+import cv2
 
-print(calibrations)
+# print(calibrations)
+
+# tag_sizes = {
+#     range(0, 100): 10
+# }
+
+# cameras = setup_cameras(tag_sizes)
+
 
 cameras = find_cameras(calibrations)
 
@@ -23,14 +32,30 @@ cam = Processor(
     source,
     tag_family='tag36h11',
     quad_decimate=2.0,
-    tag_sizes=0.08,
+    tag_sizes=0.01,
     calibration=source.calibration
 )
 
 
-print("yea")
+
+
+
+
+cap = cv2.VideoCapture(0)
+
+
+
 while True:
+    feed, ret = cap.read()
+    cv2.imshow("b", ret)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
     markers = cam.see()
+    file = cam.save("test")
     for marker in markers:
         print(marker.id)
     print(markers)
+
+
+capture.release()
+cv2.destroyAllWindows()
