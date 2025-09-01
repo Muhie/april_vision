@@ -48,14 +48,15 @@ cap = cv2.VideoCapture(0)
 while True:
     # feed, ret = cap.read()
     # cv2.imshow("b", ret)
-    frames, labels = cam.return_frames()
+    frames, test, labels  = cam.return_frames()
+    print(labels)
 
     # if colour:
     #         output_frame = frame.colour_frame
     #     else:
     #         output_frame = frame.grey_frame
     # try:
-    b = cv2.line(frames.colour_frame, [0,20], [20, 40], thickness=10, color = (0, 255, 0))
+    b = cv2.line(frames.colour_frame, [0,0], labels, thickness=10, color = (0, 255, 0))
     cv2.imshow("b", b)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

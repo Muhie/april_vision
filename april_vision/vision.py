@@ -115,6 +115,7 @@ class Processor:
 
         The annotation is in-place.
         """
+        text_origin = (0, 0)
         for marker in markers:
             integer_corners = np.array(marker.pixel_corners, dtype=np.int32)
             marker_id = f"id={marker.id}"
@@ -173,6 +174,8 @@ class Processor:
                     color=(255, 191, 0),  # deep sky blue
                     thickness=2,
                 )
+                if text_origin == None:
+                    text_origin == (0, 0)
 
         return frame, text_origin
 
@@ -249,11 +252,11 @@ class Processor:
         if annotated:
             if detections is None:
                 detections = self._detect(frames)
-            frames = self._annotate(
+            frames, origins = self._annotate(
                 frames,
                 detections,
             )
-        return(frames, detections)
+        return(frames, detections, origins)
         
 
     def close(self) -> None:
