@@ -115,7 +115,7 @@ class Processor:
 
         The annotation is in-place.
         """
-        text_origin = (0, 0)
+        labels = []
         for marker in markers:
             integer_corners = np.array(marker.pixel_corners, dtype=np.int32)
             marker_id = f"id={marker.id}"
@@ -174,10 +174,9 @@ class Processor:
                     color=(255, 191, 0),  # deep sky blue
                     thickness=2,
                 )
-                if text_origin == None:
-                    text_origin == (0, 0)
+                labels.append(text_origin)
 
-        return frame, text_origin
+        return frame, labels
 
     def _save(self, frame: Frame, name: Union[str, Path], colour: bool = True) -> None:
         """Save a frame to a file, selectable between colour and grayscale."""
