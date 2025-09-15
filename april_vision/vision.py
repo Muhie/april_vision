@@ -161,8 +161,8 @@ class Processor:
 
                 # Approximately center the text
                 text_origin = (
-                    int(marker.pixel_centre.x - 40 * marker_text_scale),
-                    int(marker.pixel_centre.y + 10 * marker_text_scale),
+                    int(marker.pixel_centre.x - 100 * marker_text_scale),
+                    int(marker.pixel_centre.y - 100 * marker_text_scale),
                 )
 
                 cv2.putText(
@@ -171,8 +171,8 @@ class Processor:
                     text_origin,
                     cv2.FONT_HERSHEY_DUPLEX,
                     2,
-                    color=(255, 191, 0),  # deep sky blue
-                    thickness=2,
+                    color=(0, 0, 255),  # RED
+                    thickness=1,
                 )
                 labels.append(text_origin)
 
