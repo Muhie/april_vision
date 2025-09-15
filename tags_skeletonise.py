@@ -6,7 +6,13 @@ from skimage import morphology, graph
 from skan import Skeleton
 import math
 import pandas as pd
+from pandas import DataFrame
 
+### PARAMETERS TO CHANGE DEPENDING ON YOUR TEST RIG
+
+distance_between_markers_0_3 = 605 # distance in mm 
+distance_between_markers_0_1 = 190 # distance in mm
+distance_between_marker_0_eversion_robot = 300 # distance in mm
 
 cameras = find_cameras(calibrations)
 
@@ -39,15 +45,14 @@ cam = Processor(
 
 cap = cv2.VideoCapture(0)
 
-distance_between_markers_0_3 = 605 # distance in mm 
 
 
 
-def write_to_csv(x_distance, y_distance):
-    print(x_distance)
-    a = pd.DataFrame([[x_distance, y_distance]],
+
+def write_to_csv(x_distance, y_distance, distan):
+    a = pd.DataFrame([[abs(x_distance - distance_between_marker_0_eversion_robot), y_distance]],
                         columns=['x', 'y'])
-    a.to_csv('/Users/muhie/Documents/GitHub/april_vision/april_vision/data.csv', mode='a', index=False, header=False)
+    a.to_csv('april_vision/data.csv', mode='a', index=False, header=False)
 
 while True:
     frames, test, labels  = cam.return_frames()
@@ -99,21 +104,22 @@ while True:
     x_start = path[len(path)-1][0]
     y_start = path[len(path)-1][1]
 
-    length_of_one_pixel_in_mm = (distance_between_markers_0_3 / math.sqrt((labels[6][0] - labels[0][0])**2 + (labels[6][1] - labels[0][1]) **2))
+    length_of_one_pixel_in_mm_x = (distance_between_markers_0_3 / math.sqrt((labels[6][0] - labels[0][0])**2 + (labels[6][1] - labels[0][1]) **2))
+    length_of_one_pixel_in_mm_y = (distance_between_markers_0_1 / math.sqrt((labels[2][0] - labels[0][0])**2 + (labels[2][1] - labels[0][1]) **2))
 
-    x_distance = abs(labels[0][0] - y_end) * length_of_one_pixel_in_mm
-    y_distance = abs(labels[0][1] - x_end) * length_of_one_pixel_in_mm
+    x_distance = abs(labels[0][0] - y_end) * length_of_one_pixel_in_mm_x
+    y_distance = abs(labels[0][1] - x_end) * length_of_one_pixel_in_mm_y
 
-    b = cv2.line(b, (labels[0][0], x_end), (y_end, x_end), thickness=10, color = (0, 255, 0))
-    b = cv2.line(b, (labels[0][0], x_end), (labels[0][0], x_end), thickness=10, color = (0, 255, 0))
+    # b = cv2.line(b, (labels[0][0], x_end), (y_end, x_end), thickness=10, color = (255, 0, 0))
+    b = cv2.line(b, (labels[0][0], x_end), (labels[0][0], x_end), thickness=10, color = (255, 0, 0))
 
-    b = cv2.line(b, labels[0], (y_end, x_end), thickness=10, color = (0, 255, 0))
-    b = cv2.line(b, labels[0], (y_start, x_start), thickness=10, color = (0, 255, 0))
-
-
+    b = cv2.line(b, labels[0], (y_end, x_end), thickness=10, color = (255, 0, 0))
+    b = cv2.line(b, labels[0], (y_start, x_start), thickness=10, color = (255, 0, 0))
 
 
-    x_text = "{}".format(x_distance)
+
+
+    x_text = "X: {}".format(x_distance)
     cv2.putText(
         img = b,
         text = x_text,
@@ -123,7 +129,7 @@ while True:
         color = (125, 246, 55),
         thickness = 2
     )
-    y_text = "{}".format(y_distance)
+    y_text = "Y: {}".format(y_distance)
     cv2.putText(
         img = b,
         text = y_text,
@@ -133,8 +139,8 @@ while True:
         color = (125, 246, 55),
         thickness = 2
     )
-    write_to_csv(x_distance, y_distance)
-    cv2.imshow("Output", b)
+    write_to_csv(x_distance, y_distance, distance_between_marker_0_eversion_robot)
+    cv2.imshow("Video Feed", b)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

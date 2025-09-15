@@ -170,7 +170,7 @@ class Processor:
                     marker_id,
                     text_origin,
                     cv2.FONT_HERSHEY_DUPLEX,
-                    marker_text_scale,
+                    2,
                     color=(255, 191, 0),  # deep sky blue
                     thickness=2,
                 )
